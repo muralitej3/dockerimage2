@@ -1,0 +1,433 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MuraliBus - Bus Ticket</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #eef3f8;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px;
+    }
+
+    .ticket {
+        width: 850px;
+        max-width: 100%;
+        background: white;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+    }
+
+    /* Header */
+    .header {
+        background: linear-gradient(135deg, #1769ff, #4b2cff);
+        color: white;
+        padding: 25px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .logo span {
+        color: #ffd43b;
+    }
+
+    .ticket-type {
+        font-size: 14px;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Route */
+    .route {
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .location {
+        width: 35%;
+    }
+
+    .location small {
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .location h2 {
+        color: #172033;
+        margin: 7px 0;
+        font-size: 28px;
+    }
+
+    .location p {
+        color: #64748b;
+        font-size: 14px;
+    }
+
+    .arrow {
+        text-align: center;
+        width: 25%;
+    }
+
+    .arrow-line {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1769ff;
+        font-size: 30px;
+    }
+
+    .arrow-line::before,
+    .arrow-line::after {
+        content: "";
+        height: 2px;
+        background: #1769ff;
+        width: 55px;
+        margin: 0 8px;
+    }
+
+    .duration {
+        font-size: 12px;
+        color: #64748b;
+        margin-top: 5px;
+    }
+
+    /* Details */
+    .details {
+        padding: 25px 30px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .detail-box label {
+        display: block;
+        color: #64748b;
+        font-size: 12px;
+        margin-bottom: 7px;
+        text-transform: uppercase;
+    }
+
+    .detail-box strong {
+        color: #172033;
+        font-size: 15px;
+    }
+
+    /* Passenger */
+    .passenger {
+        padding: 25px 30px;
+        border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .section-title {
+        font-size: 18px;
+        color: #172033;
+        margin-bottom: 18px;
+        font-weight: bold;
+    }
+
+    .passenger-info {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 20px;
+    }
+
+    .info-item {
+        background: #f7f9fc;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .info-item span {
+        display: block;
+        font-size: 12px;
+        color: #64748b;
+        margin-bottom: 5px;
+    }
+
+    .info-item strong {
+        color: #172033;
+    }
+
+    /* Bottom */
+    .bottom {
+        padding: 25px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .qr {
+        width: 100px;
+        height: 100px;
+        background:
+            linear-gradient(90deg, #000 10px, transparent 10px) 0 0 / 20px 20px,
+            linear-gradient(#000 10px, transparent 10px) 0 0 / 20px 20px,
+            white;
+        border: 8px solid white;
+        box-shadow: 0 0 0 1px #ddd;
+    }
+
+    .fare {
+        text-align: right;
+        flex: 1;
+    }
+
+    .fare span {
+        color: #64748b;
+        font-size: 13px;
+    }
+
+    .fare h2 {
+        color: #1769ff;
+        font-size: 30px;
+        margin: 5px 0;
+    }
+
+    .pnr {
+        font-size: 13px;
+        color: #64748b;
+    }
+
+    /* Button */
+    .print-btn {
+        display: block;
+        margin: 0 30px 30px;
+        width: calc(100% - 60px);
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        background: #1769ff;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .print-btn:hover {
+        background: #0d4ed8;
+    }
+
+    /* Mobile */
+    @media(max-width: 650px) {
+
+        body {
+            padding: 10px;
+        }
+
+        .header {
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+        }
+
+        .route {
+            padding: 20px;
+        }
+
+        .location h2 {
+            font-size: 20px;
+        }
+
+        .arrow-line::before,
+        .arrow-line::after {
+            width: 20px;
+        }
+
+        .details {
+            grid-template-columns: repeat(2, 1fr);
+            padding: 20px;
+        }
+
+        .passenger-info {
+            grid-template-columns: 1fr;
+        }
+
+        .bottom {
+            padding: 20px;
+        }
+    }
+
+    /* Print */
+    @media print {
+
+        body {
+            background: white;
+            padding: 0;
+        }
+
+        .ticket {
+            width: 100%;
+            box-shadow: none;
+        }
+
+        .print-btn {
+            display: none;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="ticket">
+
+    <!-- Header -->
+    <div class="header">
+
+        <div class="logo">
+            🚌 Murali<span>Bus</span>
+        </div>
+
+        <div class="ticket-type">
+            E-Ticket
+        </div>
+
+    </div>
+
+    <!-- Route -->
+    <div class="route">
+
+        <div class="location">
+            <small>FROM</small>
+            <h2>Bangalore</h2>
+            <p>Majestic Bus Stand</p>
+        </div>
+
+        <div class="arrow">
+
+            <div class="arrow-line">
+                🚌
+            </div>
+
+            <div class="duration">
+                5h 30m
+            </div>
+
+        </div>
+
+        <div class="location" style="text-align:right;">
+            <small>TO</small>
+            <h2>Hyderabad</h2>
+            <p>MGBS Bus Station</p>
+        </div>
+
+    </div>
+
+    <!-- Journey Details -->
+    <div class="details">
+
+        <div class="detail-box">
+            <label>Date</label>
+            <strong>25 September 2026</strong>
+        </div>
+
+        <div class="detail-box">
+            <label>Departure</label>
+            <strong>10:30 PM</strong>
+        </div>
+
+        <div class="detail-box">
+            <label>Bus Type</label>
+            <strong>AC Sleeper</strong>
+        </div>
+
+        <div class="detail-box">
+            <label>Seat</label>
+            <strong>U-12</strong>
+        </div>
+
+    </div>
+
+    <!-- Passenger -->
+    <div class="passenger">
+
+        <div class="section-title">
+            Passenger Details
+        </div>
+
+        <div class="passenger-info">
+
+            <div class="info-item">
+                <span>Passenger Name</span>
+                <strong>Murali Chakali</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Age</span>
+                <strong>26 Years</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Gender</span>
+                <strong>Male</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bottom -->
+    <div class="bottom">
+
+        <div class="qr"></div>
+
+        <div>
+            <div class="pnr">
+                PNR / Booking ID
+            </div>
+
+            <strong>MB202609250012</strong>
+        </div>
+
+        <div class="fare">
+
+            <span>Total Fare</span>
+
+            <h2>₹899</h2>
+
+            <span>Inclusive of taxes</span>
+
+        </div>
+
+    </div>
+
+    <!-- Print Button -->
+    <button class="print-btn" onclick="window.print()">
+        🖨️ Print / Save Ticket
+    </button>
+
+</div>
+
+</body>
+</html>
+```
