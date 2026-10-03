@@ -1,5 +1,4 @@
-FROM nginx
+FROM nginx:alpine
+COPY index.html /usr/share/nginx/html/index.html
 EXPOSE 80
-MAINTAINER murali
-LABEL this is used to book bus ticket 
-COPY index.html /usr/share/nginx/html
+CMD ["nginx", "-g", "daemon off;"]
